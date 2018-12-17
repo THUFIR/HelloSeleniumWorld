@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Logger;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 //https://www.guru99.com/first-webdriver-script.html
 public class Selenium101 {
@@ -22,8 +24,12 @@ public class Selenium101 {
     }
 
     public void browse() {
+        FirefoxBinary firefoxBinary = new FirefoxBinary();
+        firefoxBinary.addCommandLineOptions("--headless");
         System.setProperty(props.getProperty("driver"), props.getProperty("gecko"));
-        WebDriver driver = new FirefoxDriver();
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        firefoxOptions.setBinary(firefoxBinary);
+        WebDriver driver = new FirefoxDriver(firefoxOptions);
         driver.get(props.getProperty("url"));
         LOG.info(driver.getTitle());
         driver.close();
