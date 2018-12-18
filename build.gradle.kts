@@ -16,6 +16,9 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     compile  (group= "org.seleniumhq.selenium", name = "selenium-java", version =  "3.+" )
+    compile  (group= "org.testng", name = "testng", version =  "6.+" )
+
+//compile "org.testng:testng:6.3.1"
 }
 
 tasks.withType<KotlinCompile> {
