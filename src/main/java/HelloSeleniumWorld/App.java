@@ -1,33 +1,23 @@
-
 package HelloSeleniumWorld;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import browse.Selenium101;
-import java.net.MalformedURLException;
+import java.io.IOException;
+import java.util.logging.Logger;
+import java.util.Properties;
 
 public class App {
 
     private static final Logger LOG = Logger.getLogger(App.class.getName());
-    private Selenium101 s = new Selenium101();
+    private final Properties properties = new Properties();
 
-    public static void main(String... args)  {
+    public static void main(String... args) throws IOException {
         new App().init();
     }
 
-    private void init()  {
-        LOG.info("started app");
-        try {
-            s.initializeProperties();
-        } catch (IOException ex) {
-            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
-            LOG.severe("failed to load properties file");
-        }
-        try {
-            s.browse();
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(App.class.getName()).log(Level.SEVERE, "the URL failed to load", ex);
-        }
+    private void init() throws IOException {
+        LOG.fine("started app");
+        properties.load(App.class.getResourceAsStream("/selenium.properties"));
+        Selenium101 s = Selenium101.defaultPage(properties);
+        s.browseToURL();
     }
 }
