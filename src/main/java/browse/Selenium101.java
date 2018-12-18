@@ -12,7 +12,6 @@ import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
-//https://www.guru99.com/first-webdriver-script.html
 public class Selenium101 {
 
     private static final Logger LOG = Logger.getLogger(Selenium101.class.getName());
@@ -33,7 +32,7 @@ public class Selenium101 {
     public void browse() throws MalformedURLException {
         URL url = new URL(props.getProperty("url"));
         firefoxBinary = new FirefoxBinary();
-       // firefoxBinary.addCommandLineOptions("--headless");
+        firefoxBinary.addCommandLineOptions("--headless");
         System.setProperty(props.getProperty("driver"), props.getProperty("gecko"));
         firefoxOptions = new FirefoxOptions();
         firefoxOptions.setBinary(firefoxBinary);
@@ -43,24 +42,24 @@ public class Selenium101 {
         LOG.info(webDriver.getCurrentUrl().toLowerCase());
         login();
         getStatusText();
-        //webDriver.close();
+        webDriver.close();
     }
 
-    public void login() {
+    private void login() {
         String username = props.getProperty("usr");
         String password = props.getProperty("pwd");
         WebElement userName_editbox = webDriver.findElement(By.id("usr"));
         WebElement password_editbox = webDriver.findElement(By.id("pwd"));
         WebElement submit_button = webDriver.findElement(By.xpath("//input[@value='Login']"));
-
         userName_editbox.sendKeys(username);
         password_editbox.sendKeys(password);
         submit_button.click();
 
     }
 
-    public void getStatusText() {
+    private void getStatusText() {
         String statusText = webDriver.findElement(By.xpath("//div[@id='case_login']/h3")).getText();
         LOG.info(statusText);
+        assert "WELCOME :)".equals(statusText);
     }
 }
