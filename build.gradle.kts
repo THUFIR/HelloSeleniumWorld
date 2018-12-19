@@ -12,16 +12,19 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     // Apply the java plugin to add support for Java
-    java
+    //java
 
     // Apply the application plugin to add support for building an application
-    application
+    //application
 
 
     kotlin("jvm") version "1.3.11"
-id("com.github.johnrengelman.shadow") version "2.0.4"
+   id("com.github.johnrengelman.shadow") version "2.0.4"
 
 }
+
+   // mainClassName = "HelloSeleniumWorld.App"
+
 
 repositories {
     // Use jcenter for resolving your dependencies.
@@ -41,12 +44,27 @@ dependencies {
     testImplementation("org.testng:testng:6.14.3")
 }
 
-application {
+//application {
     // Define the main class for the application
-    mainClassName = "HelloSeleniumWorld.App"
-}
+  //  mainClassName = "HelloSeleniumWorld.App"
+//}
 
 val test by tasks.getting(Test::class) {
     // Use TestNG for unit tests
     useTestNG()
+}
+
+tasks.withType<ShadowJar> {
+
+    baseName = "app"
+    classifier = "demo"
+    version = "1"
+
+
+    manifest.attributes.apply {
+        put("Implementation-Title", "Gradle Jar File Example")
+        //put("Implementation-Version" version)
+        put("Main-Class", "HelloSeleniumWorld.App")
+    }
+
 }
